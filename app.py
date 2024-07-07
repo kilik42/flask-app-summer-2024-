@@ -32,9 +32,24 @@ def posts():
     return render_template('posts.html')
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    return render_template('index.html')
+    # add a task
+    if request.method == 'POST':
+        task_title = request.form['title']
+        task_content = request.form['content']
+        new_task = MyTask(title=task_title, content=task_content)
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect('/')
+        except Exception as e:
+            print(f"ERROR: {e}")
+            return f"ERROR: {e}"
+    else:
+        tasks = MyTask.query.order_by(MyTask.created).all()
+        return render_template('index.html', tasks=tasks) 
+    # return render_template('index.html')
 
 
 if __name__ == '__main__':
