@@ -2,30 +2,50 @@
 {% extends 'base.html' %}
 
 
-
 {% block head %}
 <title>Task Smask</title>
 
 {% endblock %}
 
 
-{% block content %}
+{% block content%}
 <div class="content">
-    <h1>Tasj Smash</h1>
+    <h1>Task Smash</h1>
+
+    {%if tasks | length <1 %}
+
+    <p>No tasks yet. Add one below.</p>
+
+    {%else%}
+
+
     <table>
         <tr>
             <th>Task</th>
             <th>Added</th>
             <th>Actions</th>
         </tr>
+        {%for task in tasks%}
         <tr>
-            <td>content</td>
-            <td>date</td>
-            <td>more</td>
-        </tr>
-    </table>
+            <td>{{task.content}}</td>
+            <td>{{task.created.strftime("%Y-%m-%d")}}</td>
+            <td>
+                <a href="/delete/{{task.id}}">Delete</a>
+                <br>
+                <a href="/update/{{task.id}}">Update</a>
+                <br>
+                <a href="/complete/{{task.id}}">Complete</a>
+                <br>
+                <a href="/incomplete/{{task.id}}">Incomplete</a>
+                <br>
 
-    <form action="">
+            </td>
+        </tr>
+        {%endfor%}
+    </table>
+    {%endif%}
+
+    <form action="/" method="POST">
         <input type="text" name="content" id="content" placeholder="Task">
         <input type="submit" value="Add Task" id="btn_add"/>
     </form>

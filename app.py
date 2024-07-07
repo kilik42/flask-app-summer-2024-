@@ -26,10 +26,10 @@ class MyTask(db.Model):
     def __repr__(self):
         return 'Blog post ' + str(self.id)
     
-# routes
-@app.route('/posts')
-def posts():
-    return render_template('posts.html')
+# # routes
+# @app.route('/posts')
+# def posts():
+#     return render_template('posts.html')
 
 
 @app.route('/', methods=['POST', 'GET'])
