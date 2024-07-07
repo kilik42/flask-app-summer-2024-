@@ -1,0 +1,2 @@
+.\env\Scripts\activate     how to activate on my windows 
+pip freeze > requirements.txt   to create a requirements file
